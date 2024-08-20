@@ -12,5 +12,5 @@ def index():
 def get(id):
     return getId(id)
 
-if __name__ == "__main__"
+if __name__ == "__main__":
     app.run()
