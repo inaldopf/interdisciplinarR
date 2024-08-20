@@ -2,16 +2,15 @@ from mongo.main import getCol
 from Predis.main import getId
 from flask import Flask
 
-# print(getId(itens))
-# itens = getCol()["ids"]
-
-
 app = Flask(__name__)
 
-
+@app.route("/")
+def index():
+    return "Foi"
+    
 @app.route("/get/<id>")
 def get(id):
     return getId(id)
 
-
-app.run(debug=True)
+if __name__ == "__main__"
+    app.run()
