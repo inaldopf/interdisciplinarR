@@ -1,7 +1,13 @@
 from mongo.main import getColection
 from Predis.main import getId
 from flask import Flask, jsonify, request
-from mongo.main import insertProduct, deleteProduct, getProductByName
+from mongo.main import (
+    insertProduct,
+    deleteProduct,
+    getProductByName,
+    getProductByCategory,
+    getProductByDressmarker,
+)
 
 app = Flask(__name__)
 
@@ -51,6 +57,20 @@ def delete():
 def getByName():
     name = request.args.get("name", type=str)
     products = [str(item) for item in getProductByName(name)]
+    return jsonify(products)
+
+
+@app.route("/get/category")
+def getByCategory():
+    category = request.args.get("category", type=int)
+    products = [str(item) for item in getProductByCategory(category)]
+    return jsonify(products)
+
+
+@app.route("/get/dressmarker")
+def getByDressmarker():
+    dressmarker = request.args.get("dressmarker", type=str)
+    products = [str(item) for item in getProductByDressmarker(dressmarker)]
     return jsonify(products)
 
 
