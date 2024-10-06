@@ -1,7 +1,7 @@
 from .__init__ import db
 
 
-colecao = db.order
+colecao = db.get_collection("order")
 
 # print(dict(colecao.find_one()))
 
