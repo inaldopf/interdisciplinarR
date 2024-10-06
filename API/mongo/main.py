@@ -13,4 +13,4 @@ def getColection():
     for i in order:
         orders.append(i)
 
-    return dict(orders)
+    return orders[0]
