@@ -13,3 +13,19 @@ def getColection():
     for i in order:
         orders.append(i)
     return orders
+
+
+def insertProduct(id, name, price, imageurl, typeId, dressmarker, avaliation):
+    product = db["product"]
+    status = product.insert_one(
+        {
+            "id": id,
+            "name": name,
+            "price": price,
+            "imageUrl": imageurl,
+            "typeId": typeId,
+            "dressMarkerName": dressmarker,
+            "avaliation": avaliation,
+        }
+    ).inserted_id
+    return str(status)
