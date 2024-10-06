@@ -1,5 +1,5 @@
 from .__init__ import db
-
+import json
 
 colecao = db.get_collection("order")
 
@@ -12,5 +12,4 @@ def getColection():
     orders = []
     for i in order:
         orders.append(i)
-
-    return orders[0]
+    return orders
