@@ -1,10 +1,6 @@
 from pymongo import MongoClient
 
 # Conectando ao servidor MongoDB
-client = MongoClient("localhost", 27017)
 
-db = client.bancoTeste
+db = MongoClient('mongodb+srv://Inaldo:Acess2012@khiata.64kjc.mongodb.net/?retryWrites=true&w=majority&appName=Khiata').get_database("Khiata")
 
-
-# documento = {"ids": 1}
-# colecao.insert_one(documento)

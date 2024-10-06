@@ -1,4 +1,4 @@
-from mongo.main import getCol
+from mongo.main import getColection
 from Predis.main import getId
 from flask import Flask
 
@@ -13,6 +13,11 @@ def index():
 @app.route("/get/<id>")
 def get(id):
     return getId(id)
+
+@app.route("/mongo")
+def getByMongo():
+    return getColection()
+
 
 
 if __name__ == "__main__":

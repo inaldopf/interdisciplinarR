@@ -1,10 +1,10 @@
 from .__init__ import db
 
 
-colecao = db.colecaoTeste
+colecao = db.order
 
 # print(dict(colecao.find_one()))
 
 
-def getCol():
+def getColection():
     return dict(colecao.find_one())
