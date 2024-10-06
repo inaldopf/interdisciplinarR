@@ -1,7 +1,7 @@
 from mongo.main import getColection
 from Predis.main import getId
 from flask import Flask, jsonify, request
-from mongo.main import insertProduct
+from mongo.main import insertProduct, deleteProduct
 
 app = Flask(__name__)
 
@@ -35,6 +35,16 @@ def insertProductRoute():
     return jsonify(
         insertProduct(idP, name, price, imageurl, typeId, dressmarker, avaliation)
     )  # /insert/product?id=10&name=Camiseta&price=49.99&imageurl=http://image.com&typeId=5&dressmarker=Maria&avaliation=4
+
+
+@app.route("/delete")
+def delete():
+    idP = request.args.get("id", type=int)
+
+    return jsonify({"Total de produtos deletados": deleteProduct(idP)})
+
+
+# /delete?id=10
 
 
 if __name__ == "__main__":

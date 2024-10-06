@@ -28,4 +28,11 @@ def insertProduct(id, name, price, imageurl, typeId, dressmarker, avaliation):
             "avaliation": avaliation,
         }
     ).inserted_id
+
+
+def deleteProduct(id):
+    product = db["product"]
+    status = product.delete_one({"id": id}).deleted_count
+    return status
+
     return str(status)
