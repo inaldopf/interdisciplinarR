@@ -7,4 +7,6 @@ colecao = db.get_collection("order")
 
 
 def getColection():
-    return dict(colecao.find_one())
+    order = db["order"]
+    order = order.find()
+    return dict(order)
