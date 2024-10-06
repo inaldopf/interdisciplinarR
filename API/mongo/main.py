@@ -9,4 +9,8 @@ colecao = db.get_collection("order")
 def getColection():
     order = db["order"]
     order = order.find()
-    return dict(order)
+    orders = []
+    for i in order:
+        orders.append(i)
+
+    return orders
