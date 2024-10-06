@@ -35,4 +35,7 @@ def deleteProduct(id):
     status = product.delete_one({"id": id}).deleted_count
     return status
 
-    return str(status)
+
+def getProductByName(name):
+    product = db["product"]
+    return product.find({"name": name})

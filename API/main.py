@@ -1,7 +1,7 @@
 from mongo.main import getColection
 from Predis.main import getId
 from flask import Flask, jsonify, request
-from mongo.main import insertProduct, deleteProduct
+from mongo.main import insertProduct, deleteProduct, getProductByName
 
 app = Flask(__name__)
 
@@ -45,6 +45,13 @@ def delete():
 
 
 # /delete?id=10
+
+
+@app.route("/get/name")
+def getByName():
+    name = request.args.get("name", type=str)
+    products = [str(item) for item in getProductByName(name)]
+    return jsonify(products)
 
 
 if __name__ == "__main__":
