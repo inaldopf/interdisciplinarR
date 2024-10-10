@@ -38,12 +38,28 @@ def deleteProduct(id):
 
 def getProductByName(name):
     product = db["product"]
-    return product.find({"name": name})
+    return product.aggregate(
+        [
+            {
+                "$lookup": {
+                    "from": "productType",
+                    "localField": "typeId",
+                    "foreignField": "id",
+                    "as": "type",
+                }
+            },
+            {"$unwind": "$type"},
+        ]
+    )
 
 
 def getProductByCategory(category):
     product = db["product"]
-    return product.find({"typeId": category})
+    return product.aggregate(
+        {
+            "$match": {"value": category},
+        }
+    )
 
 
 def getProductByDressmarker(dressmarker):
