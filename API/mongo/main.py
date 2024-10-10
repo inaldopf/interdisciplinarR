@@ -38,6 +38,11 @@ def deleteProduct(id):
 
 def getProductByName(name):
     product = db["product"]
+    return product.find({"name": name})
+
+
+def getProductByCategory(category):
+    product = db["product"]
     return product.aggregate(
         [
             {
@@ -50,15 +55,6 @@ def getProductByName(name):
             },
             {"$unwind": "$type"},
         ]
-    )
-
-
-def getProductByCategory(category):
-    product = db["product"]
-    return product.aggregate(
-        {
-            "$match": {"value": category},
-        }
     )
 
 

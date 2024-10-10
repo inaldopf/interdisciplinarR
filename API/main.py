@@ -62,7 +62,7 @@ def getByName():
 
 @app.route("/get/category")
 def getByCategory():
-    category = request.args.get("category", type=int)
+    category = request.args.get("category", type=str)
     products = [str(item) for item in getProductByCategory(category)]
     return jsonify(products)
 
