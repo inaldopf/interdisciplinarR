@@ -15,19 +15,26 @@ def getColection():
     return orders
 
 
-def insertProduct(id, name, price, imageurl, typeId, dressmarker, avaliation):
+def insertProduct(
+    name, price, imageurl, typeId, dressmarker, avaliation, description, size
+):
     product = db["product"]
+    Proxid = product.find_one(sort=[("id", -1)])
+    Proxid = Proxid["id"] + 1
     status = product.insert_one(
         {
-            "id": id,
+            "id": Proxid,
             "name": name,
             "price": price,
             "imageUrl": imageurl,
             "typeId": typeId,
             "dressMarkerName": dressmarker,
             "avaliation": avaliation,
+            "description": description,
+            "size": size,
         }
     ).inserted_id
+    return status
 
 
 def deleteProduct(id):

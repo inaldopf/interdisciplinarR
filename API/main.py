@@ -8,6 +8,8 @@ from mongo.main import (
     getProductByCategory,
     getProductByDressmarker,
 )
+import json
+from bson import json_util
 
 app = Flask(__name__)
 
@@ -24,23 +26,34 @@ def get(id):
 
 @app.route("/mongo")
 def getByMongo():
-    mongo = [str(item) for item in getColection()]
-    print(mongo)
-    return jsonify(mongo)
+    mongo = list(getColection())
+    json_data = json.loads(json_util.dumps(mongo))
+    print(json_data)
+    return jsonify(json_data)
 
 
 @app.route("/insert/product")
 def insertProductRoute():
-    idP = request.args.get("id", type=int)
     name = request.args.get("name", type=str)
     price = request.args.get("price", type=float)
     imageurl = request.args.get("imageurl", type=str)
     typeId = request.args.get("typeId", type=int)
     dressmarker = request.args.get("dressmarker", type=str)
     avaliation = request.args.get("avaliation", type=float)
-    return jsonify(
-        insertProduct(idP, name, price, imageurl, typeId, dressmarker, avaliation)
-    )  # /insert/product?id=10&name=Camiseta&price=49.99&imageurl=http://image.com&typeId=5&dressmarker=Maria&avaliation=4
+    description = request.args.get("description", type=str)
+    size = request.args.get("size", type=str)
+    return str(
+        insertProduct(
+            name,
+            price,
+            imageurl,
+            typeId,
+            dressmarker,
+            avaliation,
+            description,
+            size,
+        )
+    )  # /insert/product?&name=Camiseta&price=49.99&imageurl=http://image.com&typeId=5&dressmarker=Maria&avaliation=4
 
 
 @app.route("/delete")
@@ -57,14 +70,18 @@ def delete():
 def getByName():
     name = request.args.get("name", type=str)
     products = [str(item) for item in getProductByName(name)]
-    return jsonify(products)
+    json_data = json.loads(json_util.dumps(products))
+    print(json_data)
+    return jsonify(json_data)
 
 
 @app.route("/get/category")
 def getByCategory():
     category = request.args.get("category", type=str)
     products = [str(item) for item in getProductByCategory(category)]
-    return jsonify(products)
+    json_data = json.loads(json_util.dumps(products))
+    print(json_data)
+    return jsonify(json_data)
 
 
 @app.route("/get/dressmarker")
