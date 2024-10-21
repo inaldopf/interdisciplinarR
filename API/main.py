@@ -7,6 +7,7 @@ from mongo.main import (
     getProductByName,
     getProductByCategory,
     getProductByDressmarker,
+    editProduct,
 )
 import json
 from bson import json_util
@@ -64,6 +65,32 @@ def delete():
 
 
 # /delete?id=10
+
+
+@app.route("/update")
+def update():
+    idP = request.args.get("id", type=int)
+    name = request.args.get("name", type=str)
+    price = request.args.get("price", type=float)
+    imageurl = request.args.get("imageurl", type=str)
+    typeId = request.args.get("typeId", type=int)
+    dressmarker = request.args.get("dressmarker", type=str)
+    avaliation = request.args.get("avaliation", type=float)
+    description = request.args.get("description", type=str)
+    size = request.args.get("size", type=str)
+    return str(
+        editProduct(
+            idP,
+            name,
+            price,
+            imageurl,
+            typeId,
+            dressmarker,
+            avaliation,
+            description,
+            size,
+        )
+    )  # /update?id=10
 
 
 @app.route("/get/name")

@@ -37,6 +37,39 @@ def insertProduct(
     return status
 
 
+def editProduct(
+    id,
+    name: None | str,
+    price: None | float,
+    imageurl: None | str,
+    typeId: None | int,
+    dressmarker: None | str,
+    avaliation: None | float,
+    description: None | str,
+    size: None | str,
+):
+    infos = {}
+    product = db["product"]
+    if name is not None:
+        infos["name"] = name
+    if price is not None:
+        infos["price"] = price
+    if imageurl is not None:
+        infos["imageUrl"] = imageurl
+    if typeId is not None:
+        infos["typeId"] = typeId
+    if dressmarker is not None:
+        infos["dressMarkerName"] = dressmarker
+    if avaliation is not None:
+        infos["avaliation"] = avaliation
+    if description is not None:
+        infos["description"] = description
+    if size is not None:
+        infos["size"] = size
+    status = product.update_one({"id": id}, infos).upserted_ids()
+    return status
+
+
 def deleteProduct(id):
     product = db["product"]
     status = product.delete_one({"id": id}).deleted_count
