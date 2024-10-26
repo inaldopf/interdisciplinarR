@@ -70,6 +70,15 @@ def editProduct(
     return status
 
 
+def getCategorys():
+    category = db["productType"]
+    categorys = category.find({})
+    categoryList = []
+    for i in categorys:
+        categoryList.append(i)
+    return categoryList
+
+
 def deleteProduct(id):
     product = db["product"]
     status = product.delete_one({"id": id}).deleted_count
@@ -96,6 +105,15 @@ def getProductByCategory(category):
             {"$unwind": "$type"},
         ]
     )
+
+
+def getHistory(cpf):
+    order = db["order"]
+    if cpf == "1":
+        response = order.find({})
+    else:
+        response = order.find({"userCpf": cpf})
+    return response
 
 
 def getProductByDressmarker(dressmarker):

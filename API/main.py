@@ -8,6 +8,8 @@ from mongo.main import (
     getProductByCategory,
     getProductByDressmarker,
     editProduct,
+    getCategorys,
+    getHistory,
 )
 import json
 from bson import json_util
@@ -33,7 +35,7 @@ def getByMongo():
     return jsonify(json_data)
 
 
-@app.route("/insert/product")
+@app.route("/insert/product", methods=["POST"])
 def insertProductRoute():
     name = request.args.get("name", type=str)
     price = request.args.get("price", type=float)
@@ -57,7 +59,7 @@ def insertProductRoute():
     )  # /insert/product?&name=Camiseta&price=49.99&imageurl=http://image.com&typeId=5&dressmarker=Maria&avaliation=4
 
 
-@app.route("/delete")
+@app.route("/delete", methods=["DELETE"])
 def delete():
     idP = request.args.get("id", type=int)
 
@@ -67,7 +69,7 @@ def delete():
 # /delete?id=10
 
 
-@app.route("/update")
+@app.route("/update", methods=["PUT"])
 def update():
     idP = request.args.get("id", type=int)
     name = request.args.get("name", type=str)
@@ -93,7 +95,7 @@ def update():
     )  # /update?id=10
 
 
-@app.route("/get/name")
+@app.route("/get/name", methods=["GET"])
 def getByName():
     name = request.args.get("name", type=str)
     products = [str(item) for item in getProductByName(name)]
@@ -102,7 +104,7 @@ def getByName():
     return jsonify(json_data)
 
 
-@app.route("/get/category")
+@app.route("/get/category", methods=["GET"])
 def getByCategory():
     category = request.args.get("category", type=str)
     products = [str(item) for item in getProductByCategory(category)]
@@ -111,11 +113,26 @@ def getByCategory():
     return jsonify(json_data)
 
 
-@app.route("/get/dressmarker")
+@app.route("/get/dressmarker", methods=["GET"])
 def getByDressmarker():
     dressmarker = request.args.get("dressmarker", type=str)
     products = [str(item) for item in getProductByDressmarker(dressmarker)]
     return jsonify(products)
+
+
+@app.route("/category", methods=["GET"])
+def getCategory():
+    categorys = [str(item) for item in getCategorys()]
+    json_data = json.loads(json_util.dumps(categorys))
+    return jsonify(json_data)
+
+
+@app.route("/historyOrder", methods=["GET"])
+def getHistoryOrder():
+    cpf = request.args.get("cpf", type=str)
+    orders = [str(item) for item in getHistory(cpf)]
+    json_data = json.loads(json_util.dumps(orders))
+    return jsonify(json_data)
 
 
 if __name__ == "__main__":
