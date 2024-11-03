@@ -12,6 +12,7 @@ from mongo.main import (
     ActualMongosCart,
     updateCartMongo,
     alterStatsus,
+    addForms,
 )
 import ast
 from Predis.main import setCart, updateCart, getCart
@@ -187,10 +188,12 @@ def alterStatus():
     return jsonify(alterStatsus(cpf, status))
 
 
-@app.route("/forms", methods=["GET"])
+@app.route("/forms", methods=["POST"])
 def forms():
     itens = request.get_json()
-    return jsonify(str(itens["q1"]))
+    response = addForms(itens)
+    print({"Total inserted": str(response)})
+    return jsonify({"Total inserted": str(response)})
 
 
 if __name__ == "__main__":
