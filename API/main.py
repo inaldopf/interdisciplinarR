@@ -11,6 +11,7 @@ from mongo.main import (
     getHistory,
     ActualMongosCart,
     updateCartMongo,
+    alterStatsus,
 )
 import ast
 from Predis.main import setCart, updateCart, getCart
@@ -139,7 +140,13 @@ def getRedisCart():
     cpf = request.args.get("cpf", type=str)
     order = setCart(cpf)
     if len(order) is not None:
-        orders = [tuple(item) for item in order]
+        orders = []
+        for item in order:
+            if type(item) is float:
+                orders.append(("Total", item))
+            else:
+                orders.append(tuple(item))
+
         json_data = json.loads(json_util.dumps(orders))
         return jsonify(json_data)
     else:
@@ -152,7 +159,15 @@ def updateRedisCart():
     cpf = request.args.get("cpf", type=str)
     quantidade = request.args.get("quantidade", type=int)
     produto = request.args.get("produto", type=str)
-    response = updateCart(cpf, produto, quantidade)
+    preco = getProductByName(produto)
+    preco = [item for item in preco]
+    if preco == []:
+        response = "Produto não encontrado"
+
+    else:
+        preco = preco[0]["price"]
+        response = updateCart(cpf, produto, quantidade, preco)
+    print("PRECO", preco)
     return jsonify(response)
 
 
@@ -163,6 +178,13 @@ def updateMongo():
     update = updateCartMongo(cpf, get)
 
     return jsonify(update)
+
+
+@app.route("/alterStatus", methods=["PUT"])
+def alterStatus():
+    cpf = request.args.get("cpf", type=str)
+    status = request.args.get("status", type=str)
+    return jsonify(alterStatsus(cpf, status))
 
 
 if __name__ == "__main__":

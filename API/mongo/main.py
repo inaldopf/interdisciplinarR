@@ -21,19 +21,22 @@ def insertProduct(
     product = db["product"]
     Proxid = product.find_one(sort=[("id", -1)])
     Proxid = Proxid["id"] + 1
-    status = product.insert_one(
-        {
-            "id": Proxid,
-            "name": name,
-            "price": price,
-            "imageUrl": imageurl,
-            "typeId": typeId,
-            "dressMarkerName": dressmarker,
-            "avaliation": avaliation,
-            "description": description,
-            "size": size,
-        }
-    ).inserted_id
+    if product.find_one({"name": name}) is None:
+        status = product.insert_one(
+            {
+                "id": Proxid,
+                "name": name,
+                "price": price,
+                "imageUrl": imageurl,
+                "typeId": typeId,
+                "dressMarkerName": dressmarker,
+                "avaliation": avaliation,
+                "description": description,
+                "size": size,
+            }
+        ).inserted_id
+    else:
+        status = "Product already exists"
     return status
 
 
@@ -148,7 +151,7 @@ def ActualMongosCart(cpf):
                     }
                 },
                 {"$match": {"userCpf": cpf, "status": "Pendente"}},
-                {"$project": {"_id": 0, "userCpf": 1, "cart": 1}},
+                {"$project": {"_id": 0, "userCpf": 1, "cart": 1, "FinalValue": 1}},
             ]
         ).next()
     except StopIteration:
@@ -172,3 +175,14 @@ def updateCartMongo(cpf, actualReidsCart):
 def getProductByDressmarker(dressmarker):
     product = db["product"]
     return product.find({"dressMarkerName": dressmarker})
+
+
+def alterStatsus(cpf, status):
+    order = db["order"]
+    response = order.update_one(
+        {"userCpf": cpf}, {"$set": {"status": status}}
+    ).upserted_ids()
+    return response
+
+
+# def getForms(q1,q2,q3,q4,q5,q6,q7,q8):
