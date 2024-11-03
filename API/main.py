@@ -99,7 +99,7 @@ def update():
 @app.route("/get/name", methods=["GET"])
 def getByName():
     name = request.args.get("name", type=str)
-    products = [str(item) for item in getProductByName(name)]
+    products = [dict(item) for item in getProductByName(name)]
     json_data = json.loads(json_util.dumps(products))
     print(json_data)
     return jsonify(json_data)
@@ -108,7 +108,7 @@ def getByName():
 @app.route("/get/category", methods=["GET"])
 def getByCategory():
     category = request.args.get("category", type=str)
-    products = [str(item) for item in getProductByCategory(category)]
+    products = [dict(item) for item in getProductByCategory(category)]
     json_data = json.loads(json_util.dumps(products))
     print(json_data)
     return jsonify(json_data)
@@ -117,13 +117,13 @@ def getByCategory():
 @app.route("/get/dressmarker", methods=["GET"])
 def getByDressmarker():
     dressmarker = request.args.get("dressmarker", type=str)
-    products = [str(item) for item in getProductByDressmarker(dressmarker)]
+    products = [dict(item) for item in getProductByDressmarker(dressmarker)]
     return jsonify(products)
 
 
 @app.route("/category", methods=["GET"])
 def getCategory():
-    categorys = [str(item) for item in getCategorys()]
+    categorys = [dict(item) for item in getCategorys()]
     json_data = json.loads(json_util.dumps(categorys))
     return jsonify(json_data)
 
