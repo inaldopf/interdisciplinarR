@@ -136,20 +136,23 @@ def getOrderByCpf(cpf):
 
 def ActualMongosCart(cpf):
     order = db["order"]
-    response = order.aggregate(
-        [
-            {
-                "$lookup": {
-                    "from": "cart",
-                    "localField": "cart_id",
-                    "foreignField": "id",
-                    "as": "cart",
-                }
-            },
-            {"$match": {"userCpf": cpf, "status": "Pendente"}},
-            {"$project": {"_id": 0, "userCpf": 1, "cart": 1}},
-        ]
-    ).next()
+    try:
+        response = order.aggregate(
+            [
+                {
+                    "$lookup": {
+                        "from": "cart",
+                        "localField": "cart_id",
+                        "foreignField": "id",
+                        "as": "cart",
+                    }
+                },
+                {"$match": {"userCpf": cpf, "status": "Pendente"}},
+                {"$project": {"_id": 0, "userCpf": 1, "cart": 1}},
+            ]
+        ).next()
+    except StopIteration:
+        response = []
     return response
 
 

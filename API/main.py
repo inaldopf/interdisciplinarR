@@ -137,10 +137,14 @@ def getHistoryOrder():
 @app.route("/redisCart", methods=["GET"])
 def getRedisCart():
     cpf = request.args.get("cpf", type=str)
-    orders = [tuple(item) for item in setCart(cpf)]
-
-    json_data = json.loads(json_util.dumps(orders))
-    return jsonify(json_data)
+    order = setCart(cpf)
+    if len(order) is not None:
+        orders = [tuple(item) for item in order]
+        json_data = json.loads(json_util.dumps(orders))
+        return jsonify(json_data)
+    else:
+        orders = []
+        return orders
 
 
 @app.route("/updateRedisCart", methods=["PUT"])
