@@ -116,6 +116,56 @@ def getHistory(cpf):
     return response
 
 
+def getOrderByCpf(cpf):
+    order = db["order"]
+    response = order.aggregate(
+        [
+            {
+                "$lookup": {
+                    "from": "cart",
+                    "localField": "cart_id",
+                    "foreignField": "id",
+                    "as": "cart",
+                }
+            },
+            {"$match": {"userCpf": cpf}},
+        ]
+    )
+    return response
+
+
+def ActualMongosCart(cpf):
+    order = db["order"]
+    response = order.aggregate(
+        [
+            {
+                "$lookup": {
+                    "from": "cart",
+                    "localField": "cart_id",
+                    "foreignField": "id",
+                    "as": "cart",
+                }
+            },
+            {"$match": {"userCpf": cpf, "status": "Pendente"}},
+            {"$project": {"_id": 0, "userCpf": 1, "cart": 1}},
+        ]
+    ).next()
+    return response
+
+
+def updateCartMongo(cpf, actualReidsCart):
+    mongoCart = ActualMongosCart(cpf)
+    cartId = mongoCart["cart"][0]["id"]
+    cart = db["cart"]
+
+    mongoCartActual = mongoCart["cart"][0]["item"]
+
+    for item in actualReidsCart:
+        if item not in mongoCartActual:
+            print(item)
+            cart.update_one({"id": cartId}, {"$set": {f"item.{item[0]}": int(item[1])}})
+
+
 def getProductByDressmarker(dressmarker):
     product = db["product"]
     return product.find({"dressMarkerName": dressmarker})

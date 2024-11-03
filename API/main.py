@@ -1,5 +1,4 @@
 from mongo.main import getColection
-from Predis.main import getId
 from flask import Flask, jsonify, request
 from mongo.main import (
     insertProduct,
@@ -10,9 +9,14 @@ from mongo.main import (
     editProduct,
     getCategorys,
     getHistory,
+    ActualMongosCart,
+    updateCartMongo,
 )
+import ast
+from Predis.main import setCart, updateCart, getCart
 import json
 from bson import json_util
+
 
 app = Flask(__name__)
 
@@ -20,11 +24,6 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     return "Foi"
-
-
-@app.route("/get/<id>")
-def get(id):
-    return getId(id)
 
 
 @app.route("/mongo")
@@ -130,9 +129,36 @@ def getCategory():
 @app.route("/historyOrder", methods=["GET"])
 def getHistoryOrder():
     cpf = request.args.get("cpf", type=str)
-    orders = [str(item) for item in getHistory(cpf)]
+    orders = [dict(item) for item in getHistory(cpf)]
     json_data = json.loads(json_util.dumps(orders))
     return jsonify(json_data)
+
+
+@app.route("/redisCart", methods=["GET"])
+def getRedisCart():
+    cpf = request.args.get("cpf", type=str)
+    orders = [tuple(item) for item in setCart(cpf)]
+
+    json_data = json.loads(json_util.dumps(orders))
+    return jsonify(json_data)
+
+
+@app.route("/updateRedisCart", methods=["PUT"])
+def updateRedisCart():
+    cpf = request.args.get("cpf", type=str)
+    quantidade = request.args.get("quantidade", type=int)
+    produto = request.args.get("produto", type=str)
+    response = updateCart(cpf, produto, quantidade)
+    return jsonify(response)
+
+
+@app.route("/updateMongoCart", methods=["PUT"])
+def updateMongo():
+    cpf = request.args.get("cpf", type=str)
+    get = getCart(cpf)
+    update = updateCartMongo(cpf, get)
+
+    return jsonify(update)
 
 
 if __name__ == "__main__":
