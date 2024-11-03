@@ -187,5 +187,11 @@ def alterStatus():
     return jsonify(alterStatsus(cpf, status))
 
 
+@app.route("/forms", methods=["GET"])
+def forms():
+    itens = request.get_json()
+    return jsonify(str(itens["q1"]))
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

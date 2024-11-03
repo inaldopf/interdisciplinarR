@@ -95,6 +95,7 @@ def getProductByName(name):
 
 def getProductByCategory(category):
     product = db["product"]
+    print(str(category).capitalize())
     return product.aggregate(
         [
             {
@@ -102,10 +103,11 @@ def getProductByCategory(category):
                     "from": "productType",
                     "localField": "typeId",
                     "foreignField": "id",
-                    "as": "type",
+                    "as": "types",
                 }
             },
-            {"$unwind": "$type"},
+            {"$unwind": "$types"},
+            {"$match": {"types.type": str(category).capitalize()}},
         ]
     )
 
@@ -185,4 +187,7 @@ def alterStatsus(cpf, status):
     return response
 
 
-# def getForms(q1,q2,q3,q4,q5,q6,q7,q8):
+def addForms(body):
+    forms = db["forms"]
+    response = forms.insert_one(body).inserted_id
+    return response
