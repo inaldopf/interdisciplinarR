@@ -15,6 +15,7 @@ from mongo.main import (
     addForms,
     getLastForms,
 )
+from flask_cors import CORS
 import ast
 from Predis.main import setCart, updateCart, getCart
 import json
@@ -22,6 +23,7 @@ from bson import json_util
 from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/")

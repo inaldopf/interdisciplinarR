@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 BD = os.getenv("BD")
 USER = os.getenv("USER")
 PASSWORD = os.getenv("PASSWORD")
