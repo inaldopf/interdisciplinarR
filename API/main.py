@@ -16,7 +16,6 @@ from mongo.main import (
     getLastForms,
 )
 from flask_cors import CORS
-import ast
 from Predis.main import setCart, updateCart, getCart
 import json
 from bson import json_util
