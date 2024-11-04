@@ -13,12 +13,13 @@ from mongo.main import (
     updateCartMongo,
     alterStatsus,
     addForms,
+    getLastForms,
 )
 import ast
 from Predis.main import setCart, updateCart, getCart
 import json
 from bson import json_util
-
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -194,6 +195,12 @@ def forms():
     response = addForms(itens)
     print({"Total inserted": str(response)})
     return jsonify({"Total inserted": str(response)})
+
+
+@app.route("/lastForms", methods=["GET"])
+def lastForms():
+    response = getLastForms()
+    return jsonify(list(response))
 
 
 if __name__ == "__main__":

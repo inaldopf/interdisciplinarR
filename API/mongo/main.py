@@ -176,7 +176,10 @@ def updateCartMongo(cpf, actualReidsCart):
 
 def getProductByDressmarker(dressmarker):
     product = db["product"]
-    return product.find({"dressMarkerName": dressmarker})
+    product = list(product.find({"dressMarkerName": dressmarker}))
+    for item in product:
+        item["_id"] = str(item["_id"])
+    return product
 
 
 def alterStatsus(cpf, status):
@@ -190,4 +193,10 @@ def alterStatsus(cpf, status):
 def addForms(body):
     forms = db["forms"]
     response = forms.insert_one(body).inserted_id
+    return response
+
+
+def getLastForms():
+    forms = db["forms"]
+    response = list(forms.find().sort("_id", -1).limit(1))
     return response
