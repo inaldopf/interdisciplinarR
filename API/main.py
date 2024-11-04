@@ -1,4 +1,3 @@
-from mongo.main import getColection
 from flask import Flask, jsonify, request
 from mongo.main import (
     insertProduct,
@@ -28,14 +27,6 @@ CORS(app)
 @app.route("/")
 def index():
     return "Foi"
-
-
-@app.route("/mongo")
-def getByMongo():
-    mongo = list(getColection())
-    json_data = json.loads(json_util.dumps(mongo))
-    print(json_data)
-    return jsonify(json_data)
 
 
 @app.route("/insert/product", methods=["POST"])
