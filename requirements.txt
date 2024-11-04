@@ -1,5 +1,4 @@
 flask
 redis
 pymongo
-flask-cors
-dotenv
+flask.cors
