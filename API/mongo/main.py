@@ -200,3 +200,9 @@ def getLastForms():
     forms = db["forms"]
     response = list(forms.find().sort("_id", -1).limit(1))
     return response
+
+
+def createOrder(body):
+    order = db["order"]
+    response = order.insert_one(body).inserted_id
+    return response

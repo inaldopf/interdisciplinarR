@@ -13,6 +13,7 @@ from mongo.main import (
     alterStatsus,
     addForms,
     getLastForms,
+    createOrder,
 )
 from flask_cors import CORS
 from Predis.main import setCart, updateCart, getCart
@@ -193,6 +194,14 @@ def forms():
 def lastForms():
     response = getLastForms()
     return jsonify(list(response))
+
+
+@app.route("/createOrder", methods=["POST"])
+def createOrder():
+    body = request.get_json()
+    response = createOrder(body)
+    print({"Total inserted": str(response)})
+    return jsonify({"Total inserted": str(response)})
 
 
 if __name__ == "__main__":
