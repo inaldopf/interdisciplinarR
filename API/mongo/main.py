@@ -184,10 +184,7 @@ def getProductByDressmarker(dressmarker):
 
 def alterStatsus(cpf, status):
     order = db["order"]
-    response = order.update_one(
-        {"userCpf": cpf}, {"$set": {"status": status}}
-    ).upserted_ids()
-    return response
+    response = order.update_one({"userCpf": cpf}, {"$set": {"status": status}})
 
 
 def addForms(body):
