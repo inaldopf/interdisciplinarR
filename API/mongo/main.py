@@ -29,7 +29,7 @@ def insertProduct(
                 "price": price,
                 "imageUrl": imageurl,
                 "category": typeId,
-                "id_dressmaker": dressmarker,
+                "dressMarkerName": dressmarker,
                 "avaliation": avaliation,
                 "description": description,
                 "size": size,
