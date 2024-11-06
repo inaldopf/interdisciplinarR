@@ -47,7 +47,10 @@ try:
         atributos.rename(columns=mapeamento_colunas, inplace=True)
 
         # Pré-processamento
-        with open(r"API\model\preprocessador.pkl", "rb") as f:
+        caminho = os.path.join(
+            os.path.dirname(__file__), "API\model\preprocessador.pkl"
+        )
+        with open(caminho, "rb") as f:
             preprocessador = pickle.load(f)
 
         # Garantir que todas as colunas esperadas estão presentes, preenchendo com np.nan
