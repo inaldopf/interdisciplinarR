@@ -4,14 +4,15 @@ from mongo.main import ActualMongosCart
 
 def setCart(cpf):
     # pega do mongo o joga no redis
+    r.delete(f"Cart:{cpf}")
     cartM = ActualMongosCart(cpf)
-    print(cartM)
     FinalValue = cartM["FinalValue"]
     if len(r.hgetall(f"Cart:{cpf}").items()) <= 0 and len(cartM) > 0:
         for cart in cartM["cart"]:
-            print(cart)
+
             cart["_id"] = str(cart["_id"])
 
+            cart["item"]["id"] = cart["id"]
             r.hset(f"Cart:{cpf}", mapping=cart["item"])
 
             r.expire(f"Cart:{cpf}", 3600)

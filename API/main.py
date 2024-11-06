@@ -163,7 +163,6 @@ def updateRedisCart():
     else:
         preco = preco[0]["price"]
         response = updateCart(cpf, produto, quantidade, preco)
-    print("PRECO", preco)
     return jsonify(response)
 
 
