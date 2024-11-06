@@ -207,7 +207,7 @@ def createOrders():
 
 @app.route("/IA", methods=["GET"])
 def predictUser():
-    # call_all()
+    call_all()
     result = getResultIA()
     if result == "1":
         result = True
