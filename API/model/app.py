@@ -30,7 +30,6 @@ try:
         ultimo_registro = ultimo_registro[0]  # Extrai o dicionário do registro
         id_registro = ultimo_registro.pop("_id", None)
         atributos = pd.DataFrame([ultimo_registro])
-        atributos = atributos.drop("q8", axis=1)
 
         # Definir um mapeamento entre os nomes das colunas no banco e os esperados pelo pré-processador
         mapeamento_colunas = {
