@@ -1,4 +1,3 @@
-```markdown
 # Projeto API - Aplicação Python
 
 Este repositório contém uma API desenvolvida em Python, que utiliza bancos de dados como MongoDB e Redis para armazenamento e manipulação de dados. Além disso, fazemos a integração da IA com o aplicativo KHIATA.
