@@ -47,9 +47,7 @@ try:
         atributos.rename(columns=mapeamento_colunas, inplace=True)
 
         # Pré-processamento
-        caminho = os.path.join(
-            os.path.dirname(__file__), "API\model\preprocessador.pkl"
-        )
+        caminho = os.path.join(os.path.dirname(__file__), "preprocessador.pkl")
         with open(caminho, "rb") as f:
             preprocessador = pickle.load(f)
 
@@ -65,8 +63,9 @@ try:
 
     # Função para prever se a pessoa é um potencial cliente
     def prever_cliente(df_transformado):
+        caminho = os.path.join(os.path.dirname(__file__), "classificador.pkl")
         # Carregar o modelo treinado (supondo que o modelo já esteja serializado)
-        with open(r"API\model\classificador.pkl", "rb") as f:
+        with open(caminho, "rb") as f:
             modelo_carregado = pickle.load(f)
 
         # Prever usando o modelo carregado
