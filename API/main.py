@@ -209,7 +209,8 @@ def createOrders():
 def predictUser():
     call_all()
     result = getResultIA()
-    if result == "1":
+    print(result)
+    if result == "Sim":
         result = True
     else:
         result = False

@@ -31,6 +31,9 @@ try:
         id_registro = ultimo_registro.pop("_id", None)
         atributos = pd.DataFrame([ultimo_registro])
 
+        if "avaliation" in atributos.columns:
+            atributos = atributos.drop("avaliation", axis=1)
+
         # Definir um mapeamento entre os nomes das colunas no banco e os esperados pelo pré-processador
         mapeamento_colunas = {
             "q1": "Faixa_Etaria",
@@ -45,18 +48,19 @@ try:
         # Renomear as colunas para os nomes esperados
         atributos.rename(columns=mapeamento_colunas, inplace=True)
 
-        # Pré-processamento
+        # Carregar o pré-processador atualizado
         caminho = os.path.join(os.path.dirname(__file__), "preprocessador.pkl")
         with open(caminho, "rb") as f:
             preprocessador = pickle.load(f)
 
-        # Garantir que todas as colunas esperadas estão presentes, preenchendo com np.nan
+        # Garantir que todas as colunas esperadas estão presentes
         colunas_esperadas = preprocessador.get_feature_names_out()
 
-        atributos = atributos.reindex(columns=colunas_esperadas, fill_value=np.nan)
-
         # Aplicando o pré-processamento
-        df_transformado = preprocessador.transform(atributos)
+        atributos_transformados = preprocessador.transform(atributos)
+        df_transformado = pd.DataFrame(
+            atributos_transformados, columns=colunas_esperadas
+        )
 
         return df_transformado, id_registro
 
