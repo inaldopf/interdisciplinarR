@@ -197,7 +197,7 @@ def lastForms():
 
 
 @app.route("/createOrder", methods=["POST"])
-def createOrder():
+def createOrders():
     body = request.get_json()
     response = createOrder(body)
     print({"Total inserted": str(response)})

@@ -204,5 +204,15 @@ def getLastForms():
 
 def createOrder(body):
     order = db["order"]
+    cart = db["cart"]
+
+    Proxid = order.find_one(sort=[("id", -1)])
+    Proxid = Proxid["id"] + 1
+    body["id"] = Proxid
+    Proxid = cart.find_one(sort=[("id", -1)])
+    Proxid = Proxid["id"] + 1
+    body["cart_id"] = Proxid
+    cartResponse = cart.insert_one({"id": Proxid, "item": {}})
     response = order.insert_one(body).inserted_id
+
     return response
