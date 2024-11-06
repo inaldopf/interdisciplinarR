@@ -15,6 +15,7 @@ from mongo.main import (
     addForms,
     getLastForms,
     createOrder,
+    getResultIA,
 )
 from flask_cors import CORS
 from Predis.main import setCart, updateCart, getCart
@@ -206,7 +207,13 @@ def createOrders():
 
 @app.route("/IA", methods=["GET"])
 def predictUser():
-    return call_all()
+    # call_all()
+    result = getResultIA()
+    if result == "1":
+        result = True
+    else:
+        result = False
+    return jsonify({"result": result})
 
 
 if __name__ == "__main__":

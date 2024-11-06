@@ -216,3 +216,9 @@ def createOrder(body):
     response = order.insert_one(body).inserted_id
 
     return response
+
+
+def getResultIA():
+    last = getLastForms()
+    last = str(last[0]["avaliation"])
+    return last
