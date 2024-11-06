@@ -80,5 +80,5 @@ A estrutura do projeto é organizada da seguinte forma:
 
 Este README oferece uma visão geral do projeto e das instruções básicas. Mais detalhes sobre cada módulo e suas funções podem ser adicionados conforme o projeto cresce.
 
-Qualquer dúvida, estamos à disposição
+Qualquer dúvida, estamos à disposição.
 ---
