@@ -8,7 +8,7 @@ import numpy as np
 
 load_dotenv()
 
-mongo_uri = os.getenv("URI_MONGO")
+mongo_uri = os.environ.get("URI_MONGO")
 
 try:
     client = MongoClient(mongo_uri)
