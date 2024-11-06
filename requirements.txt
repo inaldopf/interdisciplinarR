@@ -3,3 +3,5 @@ redis
 pymongo
 Flask-Cors
 python-dotenv
+scikit-learn
+pandas

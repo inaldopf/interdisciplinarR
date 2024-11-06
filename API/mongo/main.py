@@ -101,13 +101,13 @@ def getProductByCategory(category):
             {
                 "$lookup": {
                     "from": "productType",
-                    "localField": "typeId",
+                    "localField": "category",
                     "foreignField": "id",
                     "as": "types",
                 }
             },
             {"$unwind": "$types"},
-            {"$match": {"types.type": str(category).capitalize()}},
+            {"$match": {"types.category": str(category).capitalize()}},
         ]
     )
 

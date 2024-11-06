@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from model.app import call_all
 from mongo.main import (
     insertProduct,
     deleteProduct,
@@ -202,6 +203,11 @@ def createOrder():
     response = createOrder(body)
     print({"Total inserted": str(response)})
     return jsonify({"Total inserted": str(response)})
+
+
+@app.route("/IA", methods=["GET"])
+def predictUser():
+    return call_all()
 
 
 if __name__ == "__main__":
