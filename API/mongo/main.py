@@ -117,7 +117,7 @@ def getHistory(cpf):
     if cpf == "1":
         response = order.find({})
     else:
-        response = order.find({"userCpf": cpf})
+        response = order.find({"userCpf": cpf, "status": "Pendente"})
     return response
 
 
