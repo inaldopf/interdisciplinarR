@@ -4,7 +4,6 @@ from mongo.main import ActualMongosCart
 
 def setCart(cpf):
     # pega do mongo o joga no redis
-    r.delete(f"Cart:{cpf}")
     cartM = ActualMongosCart(cpf)
     FinalValue = cartM["FinalValue"]
     if len(r.hgetall(f"Cart:{cpf}").items()) <= 0 and len(cartM) > 0:
