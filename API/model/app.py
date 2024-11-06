@@ -56,7 +56,7 @@ try:
         atributos = atributos.reindex(columns=colunas_esperadas, fill_value=np.nan)
 
         # Aplicando o pré-processamento
-        df_transformado = preprocessador.fit_transform(atributos)
+        df_transformado = preprocessador.transform(atributos)
 
         return df_transformado, id_registro
 
