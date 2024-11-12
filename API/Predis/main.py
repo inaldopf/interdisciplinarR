@@ -39,5 +39,8 @@ def updateCart(cpf, produto, quantidade, price):
     return cart
 
 
-def deleteCart(cpf, produto):
+def deleteCart(cpf, produto, price, quantidade):
     response = r.hdel(f"Cart:{cpf}", produto)
+    result = float(price) * float(quantidade)
+    r.decrby(f"Cart:{cpf}", "Total", round(result))
+    r.expire(f"Cart:{cpf}", 3600)
