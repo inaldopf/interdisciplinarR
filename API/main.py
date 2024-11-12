@@ -221,7 +221,7 @@ def predictUser():
     return jsonify({"result": result})
 
 
-@app.route("/deleteCart", methods=["GET"])
+@app.route("/deleteCart", methods=["DELETE"])
 def deleteProductCart():
     cpf = request.args.get("cpf", type=str)
     product = request.args.get("product", type=str)
