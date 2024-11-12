@@ -66,7 +66,7 @@ def delete():
 # /delete?id=10
 
 
-@app.route("/update", methods=["PUT"])
+@app.route("/update", methods=["GET"])
 def update():
     idP = request.args.get("id", type=int)
     name = request.args.get("name", type=str)
@@ -77,18 +77,22 @@ def update():
     avaliation = request.args.get("avaliation", type=float)
     description = request.args.get("description", type=str)
     size = request.args.get("size", type=str)
-    return str(
-        editProduct(
-            idP,
-            name,
-            price,
-            imageurl,
-            typeId,
-            dressmarker,
-            avaliation,
-            description,
-            size,
-        )
+    return jsonify(
+        {
+            "Upserteds": str(
+                editProduct(
+                    idP,
+                    name,
+                    price,
+                    imageurl,
+                    typeId,
+                    dressmarker,
+                    avaliation,
+                    description,
+                    size,
+                )
+            )
+        }
     )  # /update?id=10
 
 

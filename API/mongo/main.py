@@ -69,7 +69,7 @@ def editProduct(
         infos["description"] = description
     if size is not None:
         infos["size"] = size
-    status = product.update_one({"id": id}, infos).upserted_ids()
+    status = product.update_one({"id": id}, {"$set": infos}).modified_count
     return status
 
 
