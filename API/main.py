@@ -18,7 +18,7 @@ from mongo.main import (
     getResultIA,
 )
 from flask_cors import CORS
-from Predis.main import setCart, updateCart, getCart
+from Predis.main import setCart, updateCart, getCart, deleteCart
 import json
 from bson import json_util
 from flask_cors import CORS
@@ -66,7 +66,7 @@ def delete():
 # /delete?id=10
 
 
-@app.route("/update", methods=["GET"])
+@app.route("/update", methods=["PUT"])
 def update():
     idP = request.args.get("id", type=int)
     name = request.args.get("name", type=str)
@@ -219,6 +219,14 @@ def predictUser():
     else:
         result = False
     return jsonify({"result": result})
+
+
+@app.route("/deleteCart", methods=["DELETE"])
+def deleteProductCart():
+    cpf = request.args.get("cpf", type=str)
+    product = request.args.get("product", type=str)
+    deleteCart(cpf, product)
+    return jsonify({"Cart deleted": True})
 
 
 if __name__ == "__main__":

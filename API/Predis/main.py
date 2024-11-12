@@ -37,3 +37,7 @@ def updateCart(cpf, produto, quantidade, price):
     r.expire(f"Cart:{cpf}", 3600)
     cart = getCart(cpf)
     return cart
+
+
+def deleteCart(cpf, produto):
+    response = r.hdel(f"Cart:{cpf}", produto)
